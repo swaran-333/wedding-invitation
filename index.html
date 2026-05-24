@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wedding Invitation</title>
+    <style>
+        body {
+            font-family: 'Georgia', serif;
+            background-color: #f4f1ea;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+        .section {
+            padding: 60px 20px;
+            min-height: 80vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border-bottom: 1px solid #e0dbd1;
+        }
+        h1, h2 {
+            color: #8a2be2;
+            font-family: 'Great Vibes', cursive, serif;
+        }
+        .names {
+            font-size: 3rem;
+            margin: 10px 0;
+        }
+        /* Scratch Card Styling */
+        .scratch-container {
+            position: relative;
+            width: 300px;
+            height: 150px;
+            margin: 20px auto;
+            user-select: none;
+        }
+        .reveal-content {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            cursor: pointer;
+            border-radius: 10px;
+        }
+        /* Countdown Styling */
+        .countdown {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .countdown-item {
+            background: #fff;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            min-width: 60px;
+        }
+        .countdown-time {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #8a2be2;
+        }
+        /* Map Frame */
+        iframe {
+            border: none;
+            border-radius: 10px;
+            max-width: 100%;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="section">
+        <p>We cordially invite you to celebrate the wedding of</p>
+        <div class="names">Vasanth</div>
+        <p>with</p>
+        <div class="names">Delanis</div>
+        <p style="margin-top: 50px; color: #888;">↓ Scroll Down ↓</p>
+    </div>
+
+    <div class="section">
+        <h2>Reveal the Wedding Date</h2>
+        <div class="scratch-container">
+            <div class="reveal-content">18 June 2026</div>
+            <canvas id="scratchCanvas" width="300" height="150"></canvas>
+        </div>
+        <p style="color: #666; font-size: 0.9rem;">Scratch the card above to reveal the date!</p>
+    </div>
+
+    <div class="section">
+        <h2>Counting Down to the Big Day</h2>
+        <div class="countdown">
+            <div class="countdown-item"><div class="countdown-time" id="days">00</div><div>Days</div></div>
+            <div class="countdown-item"><div class="countdown-time" id="hours">00</div><div>Hours</div></div>
+            <div class="countdown-item"><div class="countdown-time" id="minutes">00</div><div>Mins</div></div>
+            <div class="countdown-item"><div class="countdown-time" id="seconds">00</div><div>Secs</div></div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Where We Will Celebrate</h2>
+        <p><strong>Thirumalai Madhavi Mahal</strong></p>
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3886.5815340154035!2d80.2111!3d13.0123!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTPCsDAwJzQ0LjMiTiA4MMKwMTInNDAuMCJF!5e0m3!1sen!2sin!4v1620000000000" width="350" height="250" allowfullscreen="" loading="lazy"></iframe>
+    </div>
+
+    <script>
+        // --- SCRATCH CARD LOGIC ---
+        const canvas = document.getElementById('scratchCanvas');
+        const ctx = canvas.getContext('2d');
+        let isDrawing = false;
+
+        // Fill canvas with a solid cover layer
+        ctx.fillStyle = '#b5c6b6'; // Sage green cover color like the video
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        
+        // Add text instruction on the cover
+        ctx.fillStyle = '#fff';
+        ctx.font = '16px Arial';
+        ctx.textAlign = 'center';
+        ctx.fillText('Scratch to reveal wedding date', canvas.width / 2, canvas.height / 2 + 5);
+
+        function scratch(e) {
+            if (!isDrawing) return;
+            const rect = canvas.getBoundingClientRect();
+            // Support both mouse and mobile touch events
+            const x = (e.clientX || e.touches[0].clientX) - rect.left;
+            const y = (e.clientY || e.touches[0].clientY) - rect.top;
+            
+            ctx.globalCompositeOperation = 'destination-out';
+            ctx.beginPath();
+            ctx.arc(x, y, 20, 0, Math.PI * 2);
+            ctx.fill();
+        }
+
+        canvas.addEventListener('mousedown', () => isDrawing = true);
+        canvas.addEventListener('mouseup', () => isDrawing = false);
+        canvas.addEventListener('mousemove', scratch);
+        canvas.addEventListener('touchstart', () => isDrawing = true);
+        canvas.addEventListener('touchend', () => isDrawing = false);
+        canvas.addEventListener('touchmove', scratch);
+
+        // --- COUNTDOWN TIMER LOGIC ---
+        const targetDate = new Date("June 18, 2026 00:00:00").getTime();
+
+        setInterval(() => {
+            const now = new Date().getTime();
+            const difference = targetDate - now;
+
+            const d = Math.floor(difference / (1000 * 60 * 60 * 24));
+            const h = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const m = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+            const s = Math.floor((difference % (1000 * 60)) / 1000);
+
+            document.getElementById('days').innerText = d < 10 ? '0' + d : d;
+            document.getElementById('hours').innerText = h < 10 ? '0' + h : h;
+            document.getElementById('minutes').innerText = m < 10 ? '0' + m : m;
+            document.getElementById('seconds').innerText = s < 10 ? '0' + s : s;
+        }, 1000);
+    </script>
+</body>
+</html>
