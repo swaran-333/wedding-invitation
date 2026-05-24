@@ -3,11 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wedding Invitation</title>
+    <title>Wedding Invitation - Venkatesh & Abhiharshitha</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+    
     <style>
         body {
-            font-family: 'Georgia', serif;
-            background-color: #f4f1ea;
+            font-family: 'Playfair Display', Georgia, serif;
+            background-color: #f4f1ea; /* Elegant warm cream background */
             color: #333;
             margin: 0;
             padding: 0;
@@ -23,12 +27,17 @@
             border-bottom: 1px solid #e0dbd1;
         }
         h1, h2 {
-            color: #8a2be2;
-            font-family: 'Great Vibes', cursive, serif;
+            color: #b5893d; /* Elegant soft gold/bronze tone */
+            font-family: 'Great Vibes', cursive;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
         }
         .names {
-            font-size: 3rem;
-            margin: 10px 0;
+            font-family: 'Great Vibes', cursive;
+            font-size: 3.5rem;
+            color: #8c2f39; /* Deep romantic crimson color for the names */
+            margin: 15px 0;
+            font-weight: bold;
         }
         /* Scratch Card Styling */
         .scratch-container {
@@ -50,6 +59,7 @@
             font-weight: bold;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            color: #8c2f39;
         }
         canvas {
             position: absolute;
@@ -74,7 +84,7 @@
         .countdown-time {
             font-size: 1.8rem;
             font-weight: bold;
-            color: #8a2be2;
+            color: #b5893d;
         }
         /* Map Frame */
         iframe {
@@ -88,36 +98,39 @@
 <body>
 
     <div class="section">
-        <p>We cordially invite you to celebrate the wedding of</p>
-        <div class="names">Vasanth</div>
-        <p>with</p>
-        <div class="names">Delanis</div>
-        <p style="margin-top: 50px; color: #888;">↓ Scroll Down ↓</p>
+        <p style="font-size: 1.1rem; letter-spacing: 1px;">We cordially invite you to celebrate the wedding of</p>
+        <div class="names">K. Venkatesh</div>
+        <p style="font-style: italic; font-size: 1.2rem;">with</p>
+        <div class="names">D. Abhiharshitha</div>
+        <p style="margin-top: 50px; color: #999; font-size: 0.9rem; letter-spacing: 2px;">↓ SCROLL DOWN ↓</p>
     </div>
 
     <div class="section">
         <h2>Reveal the Wedding Date</h2>
         <div class="scratch-container">
-            <div class="reveal-content">18 June 2026</div>
+            <div class="reveal-content">August 27, 2026</div> 
             <canvas id="scratchCanvas" width="300" height="150"></canvas>
         </div>
-        <p style="color: #666; font-size: 0.9rem;">Scratch the card above to reveal the date!</p>
+        <p style="color: #666; font-size: 0.9rem; font-style: italic;">Scratch the card above using your finger or mouse!</p>
     </div>
 
     <div class="section">
         <h2>Counting Down to the Big Day</h2>
         <div class="countdown">
-            <div class="countdown-item"><div class="countdown-time" id="days">00</div><div>Days</div></div>
-            <div class="countdown-item"><div class="countdown-time" id="hours">00</div><div>Hours</div></div>
-            <div class="countdown-item"><div class="countdown-time" id="minutes">00</div><div>Mins</div></div>
-            <div class="countdown-item"><div class="countdown-time" id="seconds">00</div><div>Secs</div></div>
+            <div class="countdown-item"><div class="countdown-time" id="days">00</div><div style="font-size:0.8rem; color:#666;">Days</div></div>
+            <div class="countdown-item"><div class="countdown-time" id="hours">00</div><div style="font-size:0.8rem; color:#666;">Hours</div></div>
+            <div class="countdown-item"><div class="countdown-time" id="minutes">00</div><div style="font-size:0.8rem; color:#666;">Mins</div></div>
+            <div class="countdown-item"><div class="countdown-time" id="seconds">00</div><div style="font-size:0.8rem; color:#666;">Secs</div></div>
         </div>
     </div>
 
     <div class="section">
         <h2>Where We Will Celebrate</h2>
-        <p><strong>Thirumalai Madhavi Mahal</strong></p>
-        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3886.5815340154035!2d80.2111!3d13.0123!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTPCsDAwJzQ0LjMiTiA4MMKwMTInNDAuMCJF!5e0m3!1sen!2sin!4v1620000000000" width="350" height="250" allowfullscreen="" loading="lazy"></iframe>
+        <p style="font-size: 1.2rem; margin-bottom: 20px; padding: 0 10px;">
+            <strong>A T C Kalyanamandapams</strong><br>
+            <span style="font-size: 1rem; color: #555;">Tirupati Urban, Andhra Pradesh</span>
+        </p>
+        <iframe src="https://maps.google.com/maps?q=A%20T%20C%20Kalyanamandapams%20Tirupati&t=&z=14&ie=UTF8&iwloc=&output=embed" width="350" height="250" allowfullscreen="" loading="lazy"></iframe>
     </div>
 
     <script>
@@ -126,38 +139,37 @@
         const ctx = canvas.getContext('2d');
         let isDrawing = false;
 
-        // Fill canvas with a solid cover layer
-        ctx.fillStyle = '#b5c6b6'; // Sage green cover color like the video
+        // Fill canvas with a beautiful sage green cover layer
+        ctx.fillStyle = '#b5c6b6'; 
         ctx.fillRect(0, 0, canvas.width, canvas.height);
         
-        // Add text instruction on the cover
+        // Add text instruction on the cover layer
         ctx.fillStyle = '#fff';
-        ctx.font = '16px Arial';
+        ctx.font = 'bold 15px Arial';
         ctx.textAlign = 'center';
         ctx.fillText('Scratch to reveal wedding date', canvas.width / 2, canvas.height / 2 + 5);
 
         function scratch(e) {
             if (!isDrawing) return;
             const rect = canvas.getBoundingClientRect();
-            // Support both mouse and mobile touch events
             const x = (e.clientX || e.touches[0].clientX) - rect.left;
             const y = (e.clientY || e.touches[0].clientY) - rect.top;
             
             ctx.globalCompositeOperation = 'destination-out';
             ctx.beginPath();
-            ctx.arc(x, y, 20, 0, Math.PI * 2);
+            ctx.arc(x, y, 24, 0, Math.PI * 2); 
             ctx.fill();
         }
 
         canvas.addEventListener('mousedown', () => isDrawing = true);
         canvas.addEventListener('mouseup', () => isDrawing = false);
         canvas.addEventListener('mousemove', scratch);
-        canvas.addEventListener('touchstart', () => isDrawing = true);
+        canvas.addEventListener('touchstart', (e) => { isDrawing = true; e.preventDefault(); });
         canvas.addEventListener('touchend', () => isDrawing = false);
-        canvas.addEventListener('touchmove', scratch);
+        canvas.addEventListener('touchmove', (e) => { scratch(e); e.preventDefault(); });
 
         // --- COUNTDOWN TIMER LOGIC ---
-        const targetDate = new Date("June 18, 2026 00:00:00").getTime();
+        const targetDate = new Date("August 27, 2026 00:00:00").getTime();
 
         setInterval(() => {
             const now = new Date().getTime();
@@ -168,11 +180,19 @@
             const m = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
             const s = Math.floor((difference % (1000 * 60)) / 1000);
 
-            document.getElementById('days').innerText = d < 10 ? '0' + d : d;
-            document.getElementById('hours').innerText = h < 10 ? '0' + h : h;
-            document.getElementById('minutes').innerText = m < 10 ? '0' + m : m;
-            document.getElementById('seconds').innerText = s < 10 ? '0' + s : s;
+            if (difference < 0) {
+                document.getElementById('days').innerText = '00';
+                document.getElementById('hours').innerText = '00';
+                document.getElementById('minutes').innerText = '00';
+                document.getElementById('seconds').innerText = '00';
+            } else {
+                document.getElementById('days').innerText = d < 10 ? '0' + d : d;
+                document.getElementById('hours').innerText = h < 10 ? '0' + h : h;
+                document.getElementById('minutes').innerText = m < 10 ? '0' + m : m;
+                document.getElementById('seconds').innerText = s < 10 ? '0' + s : s;
+            }
         }, 1000);
     </script>
 </body>
 </html>
+
